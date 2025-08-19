@@ -25,7 +25,7 @@ app.get("/api/sync/:mode", async (req, res) => {
     const mode = req.params.mode;
     const result = await syncData(mode); 
     res.json({
-      message: `✅ Sync completed in mode: ${mode}`,
+      message: `Sync completed in mode: ${mode}`,
       summary: result
     });
   } catch (err) {

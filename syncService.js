@@ -105,7 +105,7 @@ export const syncData = async (mode = "both") => {
     summary.overwrittenLocalDocs = inserted;
   }
 
-  console.log("✅ Sync complete!");
+  console.log("Sync complete!");
   console.log(summary);
   return summary;
 };
