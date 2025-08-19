@@ -74,14 +74,14 @@ A Near Real-Time/Configurable Data Synchronization System You have a process tha
 ```
     Method: GET
     URL: http://localhost:5000/api/sync/both
-    <br>
+   
     Method: GET
     URL: http://localhost:5000/api/sync/local-to-cloud
-    <br>
+
     Method: GET
     URL: http://localhost:5000/api/sync/cloud-to-local
-    <br>
+    
     Method: GET
     URL: http://localhost:5000/api/sync/overwrite-local
-    <br>
+   
 ```
