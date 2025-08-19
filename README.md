@@ -70,7 +70,7 @@ A Near Real-Time/Configurable Data Synchronization System You have a process tha
 <br>
 
 # Sync Data
-<br>
+
 ```
     Method: GET
     URL: http://localhost:5000/api/sync/both
