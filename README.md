@@ -7,6 +7,26 @@ This project is a Near Real-Time & Configurable Data Synchronization System that
 
 Instead of performing a heavy full data dump, the system intelligently syncs only the modified records based on timestamps, ensuring scalability and efficiency even as the dataset grows.
 
+# updatedAt and lastSyncedAt Features
+
+To make the synchronization system efficient and reliable, each document in both Local and Cloud databases includes two key timestamps:
+
+1. updatedAt
+
+This field stores the last time the document was modified (either locally or on the cloud).
+
+Whenever a user updates or creates a record, the updatedAt field is automatically refreshed to the current time.
+
+It helps the system detect which documents have changed since the last synchronization.
+
+2. lastSyncedAt
+
+This field tracks the last time the document was successfully synchronized between local and cloud databases.
+
+During the sync process, once a document is copied/updated on both sides, its lastSyncedAt value is updated to the sync time.
+
+This prevents re-syncing the same unchanged documents repeatedly, making the process lightweight and faster.
+
 # Key highlights of this project:
 
 1. Bi-Directional Synchronization
