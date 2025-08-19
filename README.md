@@ -7,56 +7,47 @@ This project is a Near Real-Time & Configurable Data Synchronization System that
 
 Instead of performing a heavy full data dump, the system intelligently syncs only the modified records based on timestamps, ensuring scalability and efficiency even as the dataset grows.
 
-# updatedAt and lastSyncedAt Features
+# Approach for Data Synchronization System
 
-To make the synchronization system efficient and reliable, each document in both Local and Cloud databases includes two key timestamps:
+1. Local & Cloud Simulation
 
-1. updatedAt
+I created two separate MongoDB collections (Local and Cloud) to simulate a multi-tenant environment.
 
-This field stores the last time the document was modified (either locally or on the cloud).
+This allows syncing client-side and server-side data without setting up an actual distributed system.
 
-Whenever a user updates or creates a record, the updatedAt field is automatically refreshed to the current time.
+2. Change Detection
 
-It helps the system detect which documents have changed since the last synchronization.
+Each document contains updatedAt and lastSyncedAt fields.
 
-2. lastSyncedAt
+During sync, the system checks updatedAt > lastSyncedAt to identify only new or modified data.
 
-This field tracks the last time the document was successfully synchronized between local and cloud databases.
+This avoids unnecessary data transfers and improves performance.
 
-During the sync process, once a document is copied/updated on both sides, its lastSyncedAt value is updated to the sync time.
+3. Two-Way Synchronization
 
-This prevents re-syncing the same unchanged documents repeatedly, making the process lightweight and faster.
+The system supports both directions:
 
-# Key highlights of this project:
+Local → Cloud: New or updated client-side documents are pushed to the cloud.
 
-1. Bi-Directional Synchronization
+Cloud → Local: New or updated server-side documents are synced back to local machines.
 
-Local ➝ Cloud: Updates from client machines are pushed to the cloud.
+Conflict resolution is handled using a “latest update wins” strategy.
 
-Cloud ➝ Local: Cloud-side changes are pulled back to local machines.
+4. Configurable Sync
 
-2. Incremental Updates
+Synchronization can be triggered in two ways:
 
-Only changed or newly created records are synchronized.
+Manual Trigger: Using API endpoints for on-demand sync.
 
-Uses fields like updatedAt and lastSyncedAt for tracking changes.
+Automated Scheduling (Cron Jobs): For example, * * * * * to sync every 1 minute.
 
-3. Conflict Resolution
+This provides a near real-time sync while remaining fully configurable.
 
-When the same document is modified both locally and on the cloud, the system smartly resolves conflicts (e.g., latest update wins).
+5. Conflict Handling
 
-4. Configurable Scheduling with Cron Jobs
+If the same document is modified on both local and cloud, the system checks updatedAt to determine the latest version.
 
-Sync can be triggered manually or scheduled using cron-like syntax.
-.
-
-5. Flexible Sync Modes
-
-Local ➝ Cloud only
-
-Cloud ➝ Local only
-
-Full two-way synchronization
+Both databases are then updated to maintain data consistency.
 
 
 # Tech Stack
@@ -73,10 +64,11 @@ Full two-way synchronization
     mongodb://127.0.0.1:27017/CareEco-Technology
 ```
 
-# API Endpoints
-<br>
+# Testing
 
-# Test in Postman
+Test on Postman and check the data synchronization result on local MongoDB server
+
+# API Endpoints
 <br>
 
 # Add Data
